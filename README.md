@@ -26,7 +26,70 @@ To Perform Decryption:
 
 ## PROGRAM:
 
+```
+#include <stdio.h>
+#include <string.h>
+
+// Function to perform a simple XOR-based encryption
+void encrypt(char *message, char *key, char *encryptedMessage, int messageLength) {
+    int keyLength = strlen(key);
+    for (int i = 0; i < messageLength; i++) {
+        encryptedMessage[i] = message[i] ^ key[i % keyLength];
+    }
+    encryptedMessage[messageLength] = '\0'; // Null-terminate the encrypted message
+}
+
+// Function to perform decryption (XOR again with the same key)
+void decrypt(char *encryptedMessage, char *key, char *decryptedMessage, int messageLength) {
+    int keyLength = strlen(key);
+    for (int i = 0; i < messageLength; i++) {
+        decryptedMessage[i] = encryptedMessage[i] ^ key[i % keyLength];
+    }
+    decryptedMessage[messageLength] = '\0'; // Null-terminate the decrypted message
+}
+
+int main() {
+    char message[100];
+    char key[100];
+    char encryptedMessage[100];
+    char decryptedMessage[100];
+
+    printf("\n***** Simulation of XOR Encryption and Decryption *****\n\n");
+
+    // Get user input for the message
+    printf("Enter the message to encrypt: ");
+    fgets(message, sizeof(message), stdin);
+    message[strcspn(message, "\n")] = '\0'; // Remove newline character
+
+    // Get user input for the key
+    printf("Enter the encryption key: ");
+    fgets(key, sizeof(key), stdin);
+    key[strcspn(key, "\n")] = '\0'; // Remove newline character
+
+    int messageLength = strlen(message);
+
+    // Encrypt the message
+    encrypt(message, key, encryptedMessage, messageLength);
+
+    printf("\nOriginal Message: %s\n", message);
+    printf("Encrypted Message (Hex): ");
+    for (int i = 0; i < messageLength; i++) {
+        printf("%02X ", (unsigned char)encryptedMessage[i]);
+    }
+    printf("\n");
+
+    // Decrypt the message
+    decrypt(encryptedMessage, key, decryptedMessage, messageLength);
+    printf("Decrypted Message: %s\n", decryptedMessage);
+
+    return 0;
+}
+```
+
 ## OUTPUT:
+
+<img width="815" height="417" alt="Screenshot 2025-09-15 142253" src="https://github.com/user-attachments/assets/db929370-e7e9-4f42-958e-726b46f781ef" />
+
 
 ## Result:
 The program implementing the Data Encryption Standard (DES) for encryption and decryption	has	been	successfully	executed,	and	the	results	have	been	verified.
